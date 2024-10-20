@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ruleSchema = new mongoose.Schema({
-    rule_string:{
+    rule:{
         type:String,
         required:true,
         unique:true

@@ -1,13 +1,22 @@
 const RuleModel = require('../models/rule.model');
-const {parse} = require('json5');
-const {evaluate} = require('mathjs');
+const {buildAST} = require('../utils/rule.utils');
 
-const create_rule = async (data) => {
+const create_rule = async (req,res) => {
     try {
-        const rule = new RuleModel(data);
+        const ast=buildAST(req.rule);
+        const rule = new RuleModel({
+            rule: req.rule,
+            ast: ast
+        });
         await rule.save();
         return rule;
     } catch (error) {
-        throw new Error(error.message);
+        res.status(500).json({
+            message: 'Error creating rule',
+            error: error.message
+          });
     }
+}
+module.exports = {
+    create_rule
 }
