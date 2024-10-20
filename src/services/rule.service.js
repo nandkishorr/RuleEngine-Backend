@@ -19,8 +19,12 @@ const create_rule = async (req,res) => {
 }
  const combine_rule = async (req,res) => {
     try {
-        const ast1=await buildAST(req.rule1);
-        const ast2=await buildAST(req.rule2);
+        const rule1=req.rule1_id;
+        const rule2=req.rule2_id;
+        const ruleData1=await RuleModel.findById(rule1);
+        const ruleData2=await RuleModel.findById(rule2);
+        const ast1=ruleData1.ast;
+        const ast2=ruleData2.ast;
         const combinedRule = {
             type: req.type,
             left: ast1,
