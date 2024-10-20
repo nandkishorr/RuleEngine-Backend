@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const ruleSchema = new mongoose.Schema({
     rule:{
         type:String,
@@ -18,5 +17,5 @@ const ruleSchema = new mongoose.Schema({
     }
 })
 
-const Rule = mongoose.model('rule', ruleSchemaSchema);
+const Rule = mongoose.model('rule', ruleSchema);
 module.exports = Rule;

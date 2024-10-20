@@ -16,8 +16,8 @@ app.use(express.json());
 connectToDb()
 
 // Define your routes here
-// const Routes = require('./routes');
-// app.use('/', Routes);
+const Routes = require('./routes/rule.route');
+app.use('/', Routes);
 
 // Start the server
 app.listen(port, () => {

@@ -1,7 +1,7 @@
 
 // Tokenize the rule string
 function tokenize(ruleString) {
-  console.log("Raw rule string:", ruleString);  
+  // console.log("Raw rule string:", ruleString);  
 
  
   const regex = /\(|\)|AND|OR|>=|<=|!=|>|<|=|[^\s()]+/g;
@@ -11,8 +11,9 @@ function tokenize(ruleString) {
   return tokens;
 }
 function buildAST(ruleString) {
+  // console.log("Raw rule string:", ruleString);
     const tokens = tokenize(ruleString);
-    // console.log("Tokenized rule:", tokens); 
+    //  console.log("Tokenized rule:", tokens); 
   
    
     const parseCondition = (tokens) => {
@@ -132,4 +133,9 @@ function evaluateRule(ast, data) {
     }
   
     throw new Error(`Invalid AST node type: ${ast.type}`);
+  }
+
+module.exports = {
+    buildAST,
+    evaluateRule
   }

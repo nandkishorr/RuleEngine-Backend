@@ -11,7 +11,7 @@ async function connectToDb() {
 
         // Connect to MongoDB
        const connection = await mongoose.connect(dbUri, {
-            dbName: 'Rule Engine', 
+            dbName: 'ruleengine', 
         });
         console.log('Connected to MongoDB ');
         return connection;

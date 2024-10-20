@@ -2,9 +2,12 @@ const {create_rule,combine_rule,evaluate_rule} = require('../services/rule.servi
 
 const createRuleData = async (req, res) => {
     try {
+        //  console.log(req.body);
         const rule = await create_rule(req.body);
-        res.status(201).json(rule);
+        console.log(rule);
+        res.send(rule);
     } catch (error) {
+        console.log(error);
         res.status(400).json({ message: error.message });
     }
 }
