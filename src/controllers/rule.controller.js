@@ -8,6 +8,17 @@ const createRuleData = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 }
+
+const combineRuleData = async (req, res) => {
+    try {
+        const rule = await combine_rule(req.body);
+        res.status(201).json(rule);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
 module.exports = {
-    createRuleData
+    createRuleData,
+    combineRuleData,
     };
