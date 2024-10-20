@@ -18,7 +18,17 @@ const combineRuleData = async (req, res) => {
     }
 }
 
+const evaluateRuleData = async (req, res) => {
+    try {
+        const rule = await evaluate_rule(req.body);
+        res.status(201).json(rule);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
 module.exports = {
     createRuleData,
     combineRuleData,
+    evaluateRuleData
     };
