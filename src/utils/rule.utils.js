@@ -1,4 +1,15 @@
 
+// Tokenize the rule string
+function tokenize(ruleString) {
+  console.log("Raw rule string:", ruleString);  
+
+ 
+  const regex = /\(|\)|AND|OR|>=|<=|!=|>|<|=|[^\s()]+/g;
+  const tokens = ruleString.match(regex);
+  // console.log("Tokenized result:", tokens);  
+  
+  return tokens;
+}
 function buildAST(ruleString) {
     const tokens = tokenize(ruleString);
     // console.log("Tokenized rule:", tokens); 
@@ -71,20 +82,6 @@ function buildAST(ruleString) {
   
     return parseExpression(tokens);
 }
-  
-  
-  function tokenize(ruleString) {
-    console.log("Raw rule string:", ruleString);  
-  
-   
-    const regex = /\(|\)|AND|OR|>=|<=|!=|>|<|=|[^\s()]+/g;
-    const tokens = ruleString.match(regex);
-    // console.log("Tokenized result:", tokens);  
-    
-    return tokens;
-  }
-  
-  
 //   const ruleString = "((age > 30 AND department = 'Sales') OR (age < 25 AND department = 'Marketing')) AND (salary > 50000 OR experience > 5)";
 //   try {
 //     const ast = buildAST(ruleString);
@@ -93,3 +90,46 @@ function buildAST(ruleString) {
 //     console.error("Error:", error.message);
 //   }
   
+
+///////////////////////////////////////////
+
+function evaluateRule(ast, data) {
+    if (ast.type === 'AND') {
+      return evaluate(ast.left, data) && evaluate(ast.right, data);
+    }
+  
+    if (ast.type === 'OR') {
+      return evaluate(ast.left, data) || evaluate(ast.right, data);
+    }
+  
+    if (ast.type === 'condition') {
+      const field = ast.field;
+      const operator = ast.operator;
+      const value = ast.value;
+  
+      if (!data.hasOwnProperty(field)) {
+        throw new Error(`Field ${field} not found in data`);
+      }
+  
+      const fieldValue = data[field];
+  
+      switch (operator) {
+        case '=':
+          return fieldValue === value;
+        case '!=':
+          return fieldValue !== value;
+        case '>':
+          return fieldValue > value;
+        case '<':
+          return fieldValue < value;
+        case '>=':
+          return fieldValue >= value;
+        case '<=':
+          return fieldValue <= value;
+        default:
+          throw new Error(`Invalid operator: ${operator}`);
+      }
+    }
+  
+    throw new Error(`Invalid AST node type: ${ast.type}`);
+  }
