@@ -1,6 +1,17 @@
 const RuleModel = require('../models/rule.model');
 const {buildAST,evaluateRule} = require('../utils/rule.utils');
 
+
+const get_all_rules = async (req,res) => {
+    try {
+        const rules = await RuleModel.find();
+        return rules;
+    } catch (error) {
+        console.error('Error occurred in get_all_rules:', error);
+        throw new Error('Failed to fetch rules');
+}
+}
+
 const create_rule = async (req,res) => {
     try {
         // console.log(typeofreq.rule);
@@ -35,7 +46,7 @@ const create_rule = async (req,res) => {
             throw new Error('Invalid Rule');
         }
         const rule = new RuleModel({
-            rule: req.rule,
+            rule: '('+ruleData1.rule +')'+ ' ' + req.type +' '+'(' + ruleData2.rule +')',
             ast: combinedRule
         });
         await rule.save();
@@ -62,5 +73,6 @@ const create_rule = async (req,res) => {
 module.exports = {
     create_rule,
     combine_rule,
-    evaluate_rule
+    evaluate_rule,
+    get_all_rules
 }
