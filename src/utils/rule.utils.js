@@ -1,4 +1,4 @@
-
+const Rule = require('../models/ruleModel'); 
 // Tokenize the rule string
 function tokenize(ruleString) {
   // console.log("Raw rule string:", ruleString);  
@@ -95,45 +95,35 @@ function buildAST(ruleString) {
 ///////////////////////////////////////////
 
 function evaluateRule(ast, data) {
-    if (ast.type === 'AND') {
-      return evaluate(ast.left, data) && evaluate(ast.right, data);
+  if (ast.type === 'condition') {
+    
+    const { field, operator, value } = ast;
+    const dataValue = data[field];
+
+    switch (operator) {
+      case '>':
+        return dataValue > value;
+      case '<':
+        return dataValue < value;
+      case '=':
+        return dataValue === value;
+      case '>=':
+        return dataValue >= value;
+      case '<=':
+        return dataValue <= value;
+      case '!=':
+        return dataValue !== value;
+      default:
+        throw new Error(`Unknown operator: ${operator}`);
     }
-  
-    if (ast.type === 'OR') {
-      return evaluate(ast.left, data) || evaluate(ast.right, data);
-    }
-  
-    if (ast.type === 'condition') {
-      const field = ast.field;
-      const operator = ast.operator;
-      const value = ast.value;
-  
-      if (!data.hasOwnProperty(field)) {
-        throw new Error(`Field ${field} not found in data`);
-      }
-  
-      const fieldValue = data[field];
-  
-      switch (operator) {
-        case '=':
-          return fieldValue === value;
-        case '!=':
-          return fieldValue !== value;
-        case '>':
-          return fieldValue > value;
-        case '<':
-          return fieldValue < value;
-        case '>=':
-          return fieldValue >= value;
-        case '<=':
-          return fieldValue <= value;
-        default:
-          throw new Error(`Invalid operator: ${operator}`);
-      }
-    }
-  
-    throw new Error(`Invalid AST node type: ${ast.type}`);
+  } else if (ast.type === 'AND') {
+        return evaluateAST(ast.left, data) && evaluateAST(ast.right, data);
+  } else if (ast.type === 'OR') {
+    return evaluateAST(ast.left, data) || evaluateAST(ast.right, data);
+  } else {
+    throw new Error(`Unknown AST node type: ${ast.type}`);
   }
+}
 
 module.exports = {
     buildAST,
