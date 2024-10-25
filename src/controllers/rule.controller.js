@@ -33,8 +33,9 @@ const combineRuleData = async (req, res) => {
 
 const evaluateRuleData = async (req, res) => {
     try {
+        // console.log(req.body);
         const rule = await evaluate_rule(req.body);
-        res.status(201).json(rule);
+        res.status(200).json(rule);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

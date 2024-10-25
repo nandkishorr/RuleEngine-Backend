@@ -1,5 +1,4 @@
-const Rule = require('../models/ruleModel'); 
-// Tokenize the rule string
+
 function tokenize(ruleString) {
   // console.log("Raw rule string:", ruleString);  
 
@@ -95,6 +94,7 @@ function buildAST(ruleString) {
 ///////////////////////////////////////////
 
 function evaluateRule(ast, data) {
+  // console.log("Evaluating rule:", ast);
   if (ast.type === 'condition') {
     
     const { field, operator, value } = ast;
@@ -117,9 +117,9 @@ function evaluateRule(ast, data) {
         throw new Error(`Unknown operator: ${operator}`);
     }
   } else if (ast.type === 'AND') {
-        return evaluateAST(ast.left, data) && evaluateAST(ast.right, data);
+        return evaluateRule(ast.left, data) && evaluateRule(ast.right, data);
   } else if (ast.type === 'OR') {
-    return evaluateAST(ast.left, data) || evaluateAST(ast.right, data);
+    return evaluateRule(ast.left, data) || evaluateRule(ast.right, data);
   } else {
     throw new Error(`Unknown AST node type: ${ast.type}`);
   }

@@ -20,7 +20,7 @@ const create_rule = async (req,res) => {
             throw new Error('Invalid Rule');
         }
         const ruleData = new RuleModel({rule: req.rule,ast: ast});
-        console.log(ruleData);
+       // console.log(ruleData);
         await ruleData.save();
         return ruleData;
     } catch (error) {
@@ -41,7 +41,7 @@ const create_rule = async (req,res) => {
             left: ast1,
             right: ast2
         };
-        console.log(combinedRule);
+        //console.log(combinedRule);
         if(!ast1 || !ast2){
             throw new Error('Invalid Rule');
         }
@@ -58,11 +58,24 @@ const create_rule = async (req,res) => {
  }
  const evaluate_rule = async (req,res) => {
     try {
-        const rule = await RuleModel.findOne(req.id);
+        // console.log(req);
+        const rule = await RuleModel.findById(req.id);
         const ast=rule.ast;
         console.log(ast);
         const result = evaluateRule(ast, req.data);
-        return result;
+        if (result) {
+            return {
+              status: 'success',
+              message: 'Successfully evaluated. The data satisfies the condition.',
+              result: true
+            };
+          } else {
+            return {
+              status: 'success',
+              message: 'Successfully evaluated. The data does not satisfy the condition.',
+              result: false
+            };
+          }
     } catch (error) {
         res.status(500).json({
             message: 'Error evaluating rule',
