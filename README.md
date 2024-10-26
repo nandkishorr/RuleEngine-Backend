@@ -8,6 +8,9 @@ The Rule Engine Backend is designed to evaluate user eligibility based on custom
 - To utilize efficient data structures (AST) for rule representation and evaluation.
 - To ensure reliable and well-tested APIs for seamless data interaction and management.
 
+## Repository
+- GitHub Repository of Frontend RuleEngine : [RuleEngine-Frontend]([https://github.com/yourusername/your-repository](https://github.com/nandkishorr/RuleEngine-Frontend.git))
+
 ## Features
 - **Dynamic Rule Creation**: 
   - Allows users to create rules from string representations, which are then converted into Abstract Syntax Trees (ASTs) for further processing.
@@ -73,9 +76,58 @@ The project follows a Model-View-Controller (MVC) architecture:
 ├── index.js                       # Main Express app setup
 └── package.json                   # Backend dependencies and scripts
 ```
+#Sample Structure of Rule: 
+```
+Rule String : ((age > 30 AND department = 'Marketing')) AND (salary > 20000 OR experience > 5 OR salary < 50000)
+{
+    "rule": "((age > 30 AND department = 'Marketing')) AND (salary > 20000 OR experience > 5 OR salary < 50000)",
+    "ast": {
+        "type": "AND",
+        "left": {
+            "type": "AND",
+            "left": {
+                "type": "condition",
+                "field": "age",
+                "operator": ">",
+                "value": 30
+            },
+            "right": {
+                "type": "condition",
+                "field": "department",
+                "operator": "=",
+                "value": "Marketing"
+            }
+        },
+        "right": {
+            "type": "OR",
+            "left": {
+                "type": "condition",
+                "field": "salary",
+                "operator": ">",
+                "value": 20000
+            },
+            "right": {
+                "type": "OR",
+                "left": {
+                    "type": "condition",
+                    "field": "experience",
+                    "operator": ">",
+                    "value": 5
+                },
+                "right": {
+                    "type": "condition",
+                    "field": "salary",
+                    "operator": "<",
+                    "value": 50000
+                }
+            }
+        }
+    },
+    "_id": "671d76ba045028505af4af97",
+    "__v": 0
+}
 
-
-
+```
 ## Prerequisites
 Ensure you have the following installed:
 - [Node.js](https://nodejs.org/) (v14 or above)
