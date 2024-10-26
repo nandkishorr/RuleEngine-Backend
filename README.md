@@ -9,7 +9,7 @@ The Rule Engine Backend is designed to evaluate user eligibility based on custom
 - To ensure reliable and well-tested APIs for seamless data interaction and management.
 
 ## Repository
-- GitHub Repository of Frontend RuleEngine : [RuleEngine-Frontend]([https://github.com/yourusername/your-repository](https://github.com/nandkishorr/RuleEngine-Frontend.git))
+- GitHub Repository of Frontend RuleEngine : [RuleEngine-Frontend](https://github.com/nandkishorr/RuleEngine-Frontend.git)
 
 ## Features
 - **Dynamic Rule Creation**: 
