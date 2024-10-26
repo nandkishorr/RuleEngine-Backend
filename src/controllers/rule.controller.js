@@ -1,5 +1,5 @@
 const { get } = require('mongoose');
-const {get_all_rules,create_rule,combine_rule,evaluate_rule,update_rule} = require('../services/rule.service');
+const {get_all_rules,create_rule,combine_rule,evaluate_rule,update_rule,delete_rule} = require('../services/rule.service');
 
 
 const getAllRuleData = async (req, res) => {
@@ -52,13 +52,12 @@ const updateRuleData = async (req, res) => {
 
 const deleteRuleData = async (req, res) => {
     try {
-        const rule = await delete_rule(req.body);
-        res.status(200).json(rule);
+        await delete_rule(req, res);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.error('Error in deleteRuleData:', error);
+        res.status(500).json({ message: 'Failed to delete rule', error: error.message });
     }
-}
-
+};
 
 
 

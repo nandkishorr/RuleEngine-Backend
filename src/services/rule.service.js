@@ -106,19 +106,23 @@ const create_rule = async (req,res) => {
 };
 const delete_rule = async (req, res) => {
     try {
-        const ruleId = req.id;
+        const ruleId = req.query.id;
+        if (!ruleId) {
+            return res.status(400).json({ message: 'Rule ID is required.' });
+        }
+        console.log('Deleting Rule ID:', ruleId);
         const rule = await RuleModel.findById(ruleId);
         if (!rule) {
             return res.status(404).json({ message: 'Rule not found.' });
         }
-        await rule.remove();
+        await RuleModel.deleteOne({ _id: ruleId });
         return res.status(200).json({ message: 'Rule deleted successfully.' });
-    }
-    catch (error) {
+    } catch (error) {
         console.error('Error occurred in delete_rule:', error);
         return res.status(500).json({ message: 'Failed to delete rule', error: error.message });
     }
-}
+};
+
 module.exports = {
     create_rule,
     combine_rule,
