@@ -1,0 +1,11 @@
+version: '3'
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      MONGODB_URL: "your_mongo_atlas_connection_string"
+    volumes:
+      - .:/app
+    command: npm start
