@@ -5,7 +5,7 @@ routes.route('/rules').get(getAllRuleData);
 routes.route('/create').post(createRuleData);
 routes.route('/combine').post(combineRuleData);
 routes.route('/evaluate').post(evaluateRuleData);
-routes.route('/update').post(updateRuleData);
+routes.route('/update').patch(updateRuleData);
 routes.route('/delete').delete(deleteRuleData);
 
 module.exports = routes;
