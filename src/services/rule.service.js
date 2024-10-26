@@ -85,8 +85,9 @@ const create_rule = async (req,res) => {
  }
  const update_rule = async (req, res) => {
     try {
-        const ruleId = req.id;
         const ruleData = req.rule;
+        const ruleId = req.id;
+        console.log('Updating Rule ID:', ruleId);
         const rule = await RuleModel.findById(ruleId);
         if (!rule) {
             return res.status(404).json({ message: 'Rule not found.' });
