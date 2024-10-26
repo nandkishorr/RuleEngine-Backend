@@ -1,5 +1,5 @@
 const { get } = require('mongoose');
-const {get_all_rules,create_rule,combine_rule,evaluate_rule} = require('../services/rule.service');
+const {get_all_rules,create_rule,combine_rule,evaluate_rule,update_rule} = require('../services/rule.service');
 
 
 const getAllRuleData = async (req, res) => {
@@ -41,9 +41,34 @@ const evaluateRuleData = async (req, res) => {
     }
 }
 
+const updateRuleData = async (req, res) => {
+    try {
+        const rule = await update_rule(req.body);
+        res.status(200).json(rule);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+const deleteRuleData = async (req, res) => {
+    try {
+        const rule = await delete_rule(req.body);
+        res.status(200).json(rule);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+
+
+
+
+
 module.exports = {
     createRuleData,
     combineRuleData,
     evaluateRuleData,
-    getAllRuleData
+    getAllRuleData,
+    updateRuleData,
+    deleteRuleData
     };

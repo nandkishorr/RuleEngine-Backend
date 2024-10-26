@@ -104,11 +104,26 @@ const create_rule = async (req,res) => {
         return res.status(500).json({ message: 'Failed to update rule', error: error.message });
     }
 };
-
+const delete_rule = async (req, res) => {
+    try {
+        const ruleId = req.id;
+        const rule = await RuleModel.findById(ruleId);
+        if (!rule) {
+            return res.status(404).json({ message: 'Rule not found.' });
+        }
+        await rule.remove();
+        return res.status(200).json({ message: 'Rule deleted successfully.' });
+    }
+    catch (error) {
+        console.error('Error occurred in delete_rule:', error);
+        return res.status(500).json({ message: 'Failed to delete rule', error: error.message });
+    }
+}
 module.exports = {
     create_rule,
     combine_rule,
     evaluate_rule,
     get_all_rules,
-    update_rule
+    update_rule,
+    delete_rule
 }
