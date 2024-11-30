@@ -1,4 +1,4 @@
-# Rule Enginew with AST
+# Rule Engine with AST
 ## Application Overview
 The Rule Engine Backend is designed to evaluate user eligibility based on customizable rules defined by various attributes such as age, department, income, and experience. This application utilizes an Abstract Syntax Tree (AST) to represent rules, allowing for dynamic creation, modification, and evaluation of these rules.
 
